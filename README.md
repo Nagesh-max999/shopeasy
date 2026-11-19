@@ -65,7 +65,9 @@ Then edit `server/.env`:
 |--------------|----------------------------------------------------------|
 | `PORT`       | API port (default `5050`)                                |
 | `MONGO_URI`  | MongoDB connection string (local or Atlas)               |
-| `JWT_SECRET` | A long random string used to sign login tokens           |
+| `JWT_SECRET` | A long random string (16+ characters) used to sign login tokens |
+| `ADMIN_EMAIL` | Email for the admin account created by `npm run seed`   |
+| `ADMIN_PASSWORD` | Password for that admin account (8+ characters)      |
 
 ### Run
 
@@ -80,7 +82,24 @@ npm run dev    # API on http://localhost:5050, website on http://localhost:3000
 |------|-----------------|-----------|
 | User | `user@shop.com` | `user123` |
 
-The seed script also creates an admin account. Set your own admin email and password in `server/seed.js` before seeding. Change or remove these accounts before deploying.
+The seed script also creates an admin account using `ADMIN_EMAIL` and `ADMIN_PASSWORD` from `server/.env`.
+
+## Deploy
+
+In production the Express server also serves the built React site, so the whole store runs as **one Node service** on one URL.
+
+| Command         | What it does                                              |
+|-----------------|-----------------------------------------------------------|
+| `npm run build` | Installs server + client dependencies and builds `client/dist` |
+| `npm start`     | Starts the server (API + website) on `$PORT`              |
+
+Any Node host works (Railway, Render, Fly.io, a VPS). Set these environment variables on the host:
+
+- `MONGO_URI` (or `MONGO_URL`): a MongoDB connection string, e.g. from MongoDB Atlas or the host's MongoDB add-on
+- `JWT_SECRET`: a long random string
+- `ADMIN_EMAIL` / `ADMIN_PASSWORD`: only needed when running the seed
+
+Then run the seed once against the production database to load the catalog and create the admin account.
 
 ## API overview
 
