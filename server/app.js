@@ -34,16 +34,6 @@ export function connectDB() {
 }
 
 // Turns a MongoDB connection error into a short hint that never includes the connection string
-// Describes the configured database address without credentials, e.g. "mongodb+srv://cluster0.abcd.mongodb.net/shop"
-export function dbTarget() {
-  try {
-    const u = new URL(MONGO_URI);
-    return `${u.protocol}//${u.host}${u.pathname}${u.username ? ' (has username)' : ' (no username)'}${u.password ? ' (has password)' : ' (no password)'}`;
-  } catch {
-    return 'unparseable MONGO_URI';
-  }
-}
-
 export function dbProblem(err) {
   const m = String(err?.message || '');
   if (/127\.0\.0\.1|localhost/i.test(MONGO_URI || '')) return 'config: MONGO_URI points to localhost; use the Atlas connection string';
