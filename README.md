@@ -1,5 +1,7 @@
 # ShopEasy
 
+**Live demo:** https://shopeasy-flame.vercel.app
+
 A full-stack online store built with **MongoDB, Express, React and Node.js**. Customers can browse products, keep a cart, sign up, and place Cash on Delivery orders. Admins manage the catalog and orders from a dashboard.
 
 ## Features
