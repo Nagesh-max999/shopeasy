@@ -11,6 +11,7 @@ import Checkout from './pages/Checkout.jsx';
 import MyOrders from './pages/MyOrders.jsx';
 import Admin from './pages/Admin.jsx';
 import { useAuth } from './context/AuthContext.jsx';
+import usePageMeta from './usePageMeta.js';
 
 function Private({ children, adminOnly }) {
   const { user, ready } = useAuth();
@@ -30,6 +31,7 @@ function ScrollToTop() {
 }
 
 function NotFound() {
+  usePageMeta({ title: 'Page not found', noindex: true });
   return (
     <div className="empty-state">
       <div className="empty-emoji">🧭</div>

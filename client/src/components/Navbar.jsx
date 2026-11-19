@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { useCart } from '../context/CartContext.jsx';
 import { getCategories } from '../api.js';
 import CategoryIcon from './CategoryIcon.jsx';
+import Logo from './Logo.jsx';
 import {
   CartIcon, UserIcon, BoxIcon, GridIcon, LogoutIcon, SearchIcon, XIcon, ZapIcon, ChevronDownIcon,
 } from './Icons.jsx';
@@ -96,9 +97,8 @@ export default function Navbar() {
   return (
     <header className="navbar">
       <div className="container nav-inner">
-        <Link to="/" className="brand">
-          <span className="brand-mark">S</span>
-          ShopEasy
+        <Link to="/" className="brand" aria-label="ShopEasy home">
+          <Logo size={38} />
         </Link>
 
         <div className="nav-delivery">

@@ -4,8 +4,10 @@ import { useToast } from '../context/ToastContext.jsx';
 import { money } from '../api.js';
 import QtyStepper from '../components/QtyStepper.jsx';
 import { TrashIcon, ArrowLeftIcon, ShieldIcon, ArrowRightIcon } from '../components/Icons.jsx';
+import usePageMeta from '../usePageMeta.js';
 
 export default function Cart() {
+  usePageMeta({ title: 'Your Cart', noindex: true });
   const { items, updateQty, removeFromCart, total, count } = useCart();
   const toast = useToast();
   const navigate = useNavigate();

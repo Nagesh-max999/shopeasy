@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { api, money } from '../api.js';
 import { CheckIcon } from '../components/Icons.jsx';
+import usePageMeta from '../usePageMeta.js';
 
 const FLOW = ['Pending', 'Shipped', 'Delivered'];
 
@@ -21,6 +22,7 @@ function Timeline({ status }) {
 }
 
 export default function MyOrders() {
+  usePageMeta({ title: 'My Orders', noindex: true });
   const [orders, setOrders] = useState(null);
   const [error, setError] = useState('');
   const [params] = useSearchParams();

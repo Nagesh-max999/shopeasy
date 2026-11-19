@@ -6,6 +6,7 @@ import { useToast } from '../context/ToastContext.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 import QtyStepper from '../components/QtyStepper.jsx';
 import { CartIcon, TruckIcon, CashIcon, ReturnIcon } from '../components/Icons.jsx';
+import usePageMeta from '../usePageMeta.js';
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -29,6 +30,45 @@ export default function ProductPage() {
       .then((list) => setRelated(list.filter((x) => x._id !== id).slice(0, 4)))
       .catch((e) => setError(e.message));
   }, [id]);
+
+  usePageMeta(
+    error
+      ? { title: 'Product not found', noindex: true }
+      : product
+        ? {
+            title: `${product.name} (${product.category})`,
+            description: `Buy ${product.name} for ${money(product.price)} at ShopEasy. ${product.description || ''}`,
+          }
+        : { title: 'Loading…' }
+  );
+
+  // Product structured data (schema.org) so search engines can show price and availability
+  useEffect(() => {
+    if (!product) return;
+    const el = document.createElement('script');
+    el.type = 'application/ld+json';
+    el.dataset.page = 'product';
+    el.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: product.name,
+      description: product.description,
+      image: product.image,
+      category: product.category,
+      sku: product._id,
+      brand: { '@type': 'Brand', name: 'ShopEasy' },
+      offers: {
+        '@type': 'Offer',
+        url: window.location.href,
+        priceCurrency: 'INR',
+        price: product.price,
+        availability: product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+        itemCondition: 'https://schema.org/NewCondition',
+      },
+    });
+    document.head.appendChild(el);
+    return () => el.remove();
+  }, [product]);
 
   if (error)
     return (

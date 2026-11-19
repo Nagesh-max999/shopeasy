@@ -4,13 +4,14 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 import AuthLayout from '../components/AuthLayout.jsx';
 import PasswordInput from '../components/PasswordInput.jsx';
+import usePageMeta from '../usePageMeta.js';
 
-const DEMO = [
-  { label: 'Customer demo', email: 'user@shop.com', password: 'user123' },
-  { label: 'Admin demo', email: 'admin@shop.com', password: 'admin123' },
-];
+// Public demo shopper account (created by the seed). There is deliberately no admin
+// demo: the admin login is private and set through environment variables.
+const DEMO = [{ label: 'Try the demo account', email: 'user@shop.com', password: 'user123' }];
 
 export default function Login() {
+  usePageMeta({ title: 'Login', description: 'Log in to your ShopEasy account to check out faster and track your orders.' });
   const { login } = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ export default function Login() {
         </button>
       </form>
 
-      <div className="divider"><span>or try a demo account</span></div>
+      <div className="divider"><span>or just look around</span></div>
       <div className="demo-btns">
         {DEMO.map((d) => (
           <button key={d.email} className="btn btn-outline grow" disabled={busy}

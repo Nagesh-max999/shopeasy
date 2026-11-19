@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 import { CashIcon, CheckIcon } from '../components/Icons.jsx';
+import usePageMeta from '../usePageMeta.js';
 
 function Steps({ current }) {
   const steps = ['Cart', 'Shipping', 'Confirmed'];
@@ -21,6 +22,7 @@ function Steps({ current }) {
 }
 
 export default function Checkout() {
+  usePageMeta({ title: 'Checkout', noindex: true });
   const { items, total, clearCart } = useCart();
   const { user } = useAuth();
   const toast = useToast();

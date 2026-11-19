@@ -2,11 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { api, money } from '../api.js';
 import { useToast } from '../context/ToastContext.jsx';
 import { BoxIcon, ClockIcon, RupeeIcon, AlertIcon, EditIcon, TrashIcon, SearchIcon, PlusIcon, XIcon } from '../components/Icons.jsx';
+import usePageMeta from '../usePageMeta.js';
 
 const empty = { name: '', description: '', price: '', image: '', category: '', stock: '' };
 const STATUSES = ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
 
 export default function Admin() {
+  usePageMeta({ title: 'Admin Dashboard', noindex: true });
   const [tab, setTab] = useState('products');
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);

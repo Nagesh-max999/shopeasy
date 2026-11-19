@@ -1,17 +1,76 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ShopEasy | Groceries, Gadgets &amp; Fashion with Free Delivery</title>
+    <meta name="description" content="Shop groceries, kitchen essentials, phones, laptops, beauty, fashion and more at ShopEasy. Free delivery on every order and Cash on Delivery across India." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://shopeasy-flame.vercel.app/" />
+
+    <!-- Icons -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#4f46e5" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛍️</text></svg>" />
+    <meta name="application-name" content="ShopEasy" />
+    <meta name="apple-mobile-web-app-title" content="ShopEasy" />
+
+    <!-- Social previews (WhatsApp, LinkedIn, Facebook, X) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ShopEasy" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:url" content="https://shopeasy-flame.vercel.app/" />
+    <meta property="og:title" content="ShopEasy | Groceries, Gadgets &amp; Fashion with Free Delivery" />
+    <meta property="og:description" content="Shop groceries, gadgets, beauty and fashion with free delivery on every order and Cash on Delivery." />
+    <meta property="og:image" content="https://shopeasy-flame.vercel.app/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ShopEasy: everyday essentials delivered free" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ShopEasy | Groceries, Gadgets &amp; Fashion with Free Delivery" />
+    <meta name="twitter:description" content="Free delivery on every order and Cash on Delivery." />
+    <meta name="twitter:image" content="https://shopeasy-flame.vercel.app/og-image.jpg" />
+
+    <!-- Site name + search box for search engines -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "ShopEasy",
+            "url": "https://shopeasy-flame.vercel.app/",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://shopeasy-flame.vercel.app/?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": "Organization",
+            "name": "ShopEasy",
+            "url": "https://shopeasy-flame.vercel.app/",
+            "logo": "https://shopeasy-flame.vercel.app/icon-512.png"
+          }
+        ]
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <title>ShopEasy</title>
+    <link rel="preconnect" href="https://cdn.dummyjson.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <p style="font-family: system-ui, sans-serif; padding: 24px; text-align: center">
+        ShopEasy needs JavaScript to run. Please enable it in your browser to start shopping.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

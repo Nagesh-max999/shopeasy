@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 import authRoutes from './routes/auth.js';
 import productRoutes from './routes/products.js';
 import orderRoutes from './routes/orders.js';
+import Product from './models/Product.js';
 
 // Local settings live in server/.env (works whichever folder the server is started from);
 // on a hosting platform the variables come from its dashboard instead.
@@ -55,6 +56,38 @@ export function createApp({ serveClient = false } = {}) {
   app.use('/api/orders', orderRoutes);
 
   app.get('/api/health', (req, res) => res.json({ ok: true }));
+
+  // XML sitemap built from the live catalog: home, every category and every product page
+  app.get(['/sitemap.xml', '/api/sitemap.xml'], async (req, res, next) => {
+    try {
+      const host = req.get('x-forwarded-host') || req.get('host');
+      const base = (process.env.SITE_URL || `https://${host}`).replace(/\/$/, '');
+      const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const [categories, products] = await Promise.all([
+        Product.distinct('category'),
+        Product.find({}, '_id updatedAt').lean(),
+      ]);
+      const urls = [
+        { loc: `${base}/`, priority: '1.0', changefreq: 'daily' },
+        ...categories.map((c) => ({ loc: `${base}/?cat=${encodeURIComponent(c)}`, priority: '0.8', changefreq: 'daily' })),
+        ...products.map((p) => ({
+          loc: `${base}/product/${p._id}`,
+          lastmod: p.updatedAt?.toISOString().slice(0, 10),
+          priority: '0.6',
+          changefreq: 'weekly',
+        })),
+      ];
+      const body = urls
+        .map((u) => `  <url><loc>${esc(u.loc)}</loc>${u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : ''}<changefreq>${u.changefreq}</changefreq><priority>${u.priority}</priority></url>`)
+        .join('\n');
+      res
+        .type('application/xml')
+        .set('Cache-Control', 'public, max-age=3600')
+        .send(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`);
+    } catch (err) {
+      next(err);
+    }
+  });
   app.use('/api', (req, res) => res.status(404).json({ message: 'Not found' }));
 
   // Serve the built React site (client/dist) from the same server when it exists,

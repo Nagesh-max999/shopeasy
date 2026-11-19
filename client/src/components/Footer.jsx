@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories } from '../api.js';
 import { useAuth } from '../context/AuthContext.jsx';
+import Logo from './Logo.jsx';
 import { TruckIcon, CashIcon, ReturnIcon, ShieldIcon } from './Icons.jsx';
 
 // Each of these returns results in the sample catalog
@@ -50,7 +51,7 @@ export default function Footer() {
 
         <div className="footer-main">
           <div className="footer-brand">
-            <Link to="/" className="brand footer-logo"><span className="brand-mark">S</span>ShopEasy</Link>
+            <Link to="/" className="brand footer-logo" aria-label="ShopEasy home"><Logo size={44} /></Link>
             <p className="muted">Everyday essentials, delivered free to your door.</p>
             <p className="muted small">© {new Date().getFullYear()} ShopEasy</p>
           </div>

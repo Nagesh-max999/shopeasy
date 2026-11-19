@@ -4,8 +4,10 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 import AuthLayout from '../components/AuthLayout.jsx';
 import PasswordInput from '../components/PasswordInput.jsx';
+import usePageMeta from '../usePageMeta.js';
 
 export default function Register() {
+  usePageMeta({ title: 'Create Account', description: 'Create a free ShopEasy account for free delivery, Cash on Delivery and easy order tracking.' });
   const { register } = useAuth();
   const toast = useToast();
   const navigate = useNavigate();

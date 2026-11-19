@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { api } from '../api.js';
 import ProductCard, { ProductCardSkeleton } from '../components/ProductCard.jsx';
 import HeroSlider from '../components/HeroSlider.jsx';
+import usePageMeta from '../usePageMeta.js';
 import { ChevronRightIcon } from '../components/Icons.jsx';
 
 const RAIL_SIZE = 12; // products per category row on the home page
@@ -13,6 +14,18 @@ export default function Home() {
   const cat = params.get('cat') || '';
   const sort = params.get('sort') || 'newest';
   const browsing = !q && !cat;
+
+  usePageMeta(
+    browsing
+      ? {}
+      : q
+        ? { title: `Search results for "${q}"`, noindex: true }
+        : {
+            title: `${cat}: Shop Online`,
+            description: `Buy ${cat} online at ShopEasy. Great prices in ₹, free delivery on every order and Cash on Delivery.`,
+            canonicalPath: `/?cat=${encodeURIComponent(cat)}`,
+          }
+  );
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
