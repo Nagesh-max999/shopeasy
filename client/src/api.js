@@ -14,4 +14,16 @@ export async function api(path, { method = 'GET', body } = {}) {
   return data;
 }
 
-export const money = (n) => `$${Number(n).toFixed(2)}`;
+// Indian Rupees with Indian digit grouping, e.g. ₹1,49,999 (paise shown only when present)
+const inr = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2 });
+export const money = (n) => inr.format(Number(n) || 0).replace(/\.00$/, '');
+
+// Categories rarely change, so fetch them once and share the result.
+let categoriesPromise;
+export const getCategories = () => {
+  categoriesPromise ??= api('/products/categories').catch((e) => {
+    categoriesPromise = undefined;
+    throw e;
+  });
+  return categoriesPromise;
+};

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { api, money } from '../api.js';
 import { useToast } from '../context/ToastContext.jsx';
-import { BoxIcon, ClockIcon, DollarIcon, AlertIcon, EditIcon, TrashIcon, SearchIcon, PlusIcon, XIcon } from '../components/Icons.jsx';
+import { BoxIcon, ClockIcon, RupeeIcon, AlertIcon, EditIcon, TrashIcon, SearchIcon, PlusIcon, XIcon } from '../components/Icons.jsx';
 
 const empty = { name: '', description: '', price: '', image: '', category: '', stock: '' };
 const STATUSES = ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
@@ -26,7 +26,7 @@ export default function Admin() {
   const lowStock = products.filter((p) => p.stock <= 5).length;
 
   const stats = [
-    { label: 'Revenue', value: money(revenue), icon: <DollarIcon />, tone: 'green' },
+    { label: 'Revenue', value: money(revenue), icon: <RupeeIcon />, tone: 'green' },
     { label: 'Orders', value: orders.length, icon: <BoxIcon />, tone: 'blue' },
     { label: 'Pending', value: pending, icon: <ClockIcon />, tone: 'amber' },
     { label: 'Low stock', value: lowStock, icon: <AlertIcon />, tone: 'red' },
@@ -152,7 +152,7 @@ function Products({ products, reload }) {
                 </label>
               </div>
               <div className="form-row">
-                <label>Price ($)<input type="number" step="0.01" min="0" required value={form.price} onChange={set('price')} /></label>
+                <label>Price (₹)<input type="number" step="0.01" min="0" required value={form.price} onChange={set('price')} /></label>
                 <label>Stock<input type="number" min="0" required value={form.stock} onChange={set('stock')} /></label>
               </div>
               <label>Image URL<input value={form.image} onChange={set('image')} placeholder="https://…" /></label>

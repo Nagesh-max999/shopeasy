@@ -5,6 +5,8 @@ A full-stack online store built with **MongoDB, Express, React and Node.js**. Cu
 ## Features
 
 **Shopping**
+- Quick-commerce style storefront: header search, category tab bar, auto-scrolling offer banners, "Shop by Category" grid and a product row per category
+- 180 sample products in 10 categories, priced in Indian Rupees (₹)
 - Product catalog with search, category filter and price sorting
 - Product detail page with live stock information
 - Cart saved in the browser, so it survives a page refresh
@@ -113,8 +115,11 @@ shopeasy/
     ├── middleware/      JWT auth and admin checks
     ├── models/          User, Product, Order (Mongoose)
     ├── routes/          auth, products, orders
+    ├── data/            products.json (sample catalog)
     └── seed.js          Sample data loader
 ```
+
+Sample product names, descriptions and photos come from [DummyJSON](https://dummyjson.com). Photos are loaded from its CDN, so they need an internet connection.
 
 ## Troubleshooting
 
