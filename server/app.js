@@ -33,6 +33,17 @@ export function connectDB() {
   return connecting;
 }
 
+// Turns a MongoDB connection error into a short hint that never includes the connection string
+export function dbProblem(err) {
+  const m = String(err?.message || '');
+  if (/bad auth|authentication failed/i.test(m)) return 'auth: username or password in MONGO_URI is wrong';
+  if (/whitelist|not authorized.*ip|ip address/i.test(m) || err?.name === 'MongooseServerSelectionError')
+    return 'network: cannot reach the cluster (check Atlas Network Access allows 0.0.0.0/0, and that the cluster is running)';
+  if (/querySrv|ENOTFOUND|EBADNAME/i.test(m)) return 'dns: cluster host name in MONGO_URI not found';
+  if (/scheme|Invalid connection string|URI|parse/i.test(m)) return 'format: MONGO_URI is not a valid connection string';
+  return `other: ${err?.name || 'Error'}`;
+}
+
 export function createApp({ serveClient = false } = {}) {
   const app = express();
   app.use(cors());
